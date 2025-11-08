@@ -8,8 +8,8 @@ async def get_all_palmprints():
     pass
 
 
-@router.get("/{user_id}", status_code=status.HTTP_200_OK)
-async def get_user_palmprint(user_id: int):
+@router.post("/{user_id}", status_code=status.HTTP_200_OK)
+async def register_user_palmprint(user_id: int):
     pass
 
 

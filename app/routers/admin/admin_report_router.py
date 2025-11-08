@@ -16,8 +16,3 @@ async def get_report_detail(report_id: int):
 @router.patch("/{report_id}/status", status_code=status.HTTP_200_OK)
 async def update_report_status(report_id: int):
     pass
-
-
-@router.delete("/{report_id}", status_code=status.HTTP_204_NO_CONTENT)
-async def delete_report(report_id: int):
-    pass
