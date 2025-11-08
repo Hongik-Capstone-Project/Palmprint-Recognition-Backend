@@ -3,24 +3,8 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.openapi.utils import get_openapi
 
-from app.core.config import settings
-from app.core.database import init_db
-from app.routers.admin import (
-    admin_device_router,
-    admin_palmprint_router,
-    admin_report_router,
-    admin_user_router,
-    admin_verification_router,
-)
-from app.routers.general import (
-    auth_router,
-    device_router,
-    institution_router,
-    palmprint_router,
-    payment_router,
-    user_router,
-    verification_router,
-)
+from app.core import init_db, settings
+from app.routers import admin, general
 
 
 @asynccontextmanager
@@ -28,9 +12,9 @@ async def lifespan(app: FastAPI):
     try:
         await init_db()
     except Exception:
-        print("⚠️ Database initialization skipped.")
+        print("Database initialization skipped.")
     yield
-    print("🔚 Application shutdown complete.")
+    print("Application shutdown complete.")
 
 
 app = FastAPI(
@@ -50,19 +34,19 @@ app = FastAPI(
 )
 
 
-app.include_router(auth_router.router)
-app.include_router(user_router.router)
-app.include_router(institution_router.router)
-app.include_router(payment_router.router)
-app.include_router(palmprint_router.router)
-app.include_router(verification_router.router)
-app.include_router(device_router.router)
+app.include_router(general.auth_router.router)
+app.include_router(general.user_router.router)
+app.include_router(general.institution_router.router)
+app.include_router(general.payment_router.router)
+app.include_router(general.palmprint_router.router)
+app.include_router(general.verification_router.router)
+app.include_router(general.device_router.router)
 
-app.include_router(admin_user_router.router)
-app.include_router(admin_palmprint_router.router)
-app.include_router(admin_device_router.router)
-app.include_router(admin_report_router.router)
-app.include_router(admin_verification_router.router)
+app.include_router(admin.admin_user_router.router)
+app.include_router(admin.admin_palmprint_router.router)
+app.include_router(admin.admin_device_router.router)
+app.include_router(admin.admin_report_router.router)
+app.include_router(admin.admin_verification_router.router)
 
 
 @app.get("/", tags=["Health"])
