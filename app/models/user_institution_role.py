@@ -2,6 +2,9 @@
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import ForeignKey, UniqueConstraint
 from app.models.base import Base 
+from .role import Role 
+from .user import User
+from .institution import Institution
 
 class UserInstitutionRole(Base):
     __tablename__ = "user_institution_roles"
