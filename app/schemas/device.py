@@ -1,8 +1,12 @@
 # app/schemas/device.py
 from __future__ import annotations
-from pydantic import Field
-from typing import Optional, List
+
+from typing import List, Optional
+
+from pydantic import BaseModel, Field
+
 from app.schemas.base import BaseSchema
+
 
 # -----------------
 # 요청 DTO (Request)
@@ -13,10 +17,12 @@ class DeviceCreate(BaseModel):
     location: Optional[str] = Field(None, max_length=255)
     status: str = Field(..., max_length=50)
 
+
 class DeviceUpdate(BaseModel):
     firmware_version: Optional[str] = Field(None, max_length=100)
     location: Optional[str] = Field(None, max_length=255)
     status: Optional[str] = Field(None, max_length=50)
+
 
 # -----------------
 # 응답 DTO (Response)

@@ -1,8 +1,12 @@
 # app/schemas/user_institution.py
 from __future__ import annotations
-from pydantic import Field
+
 from typing import Optional
+
+from pydantic import BaseModel, Field
+
 from app.schemas.base import BaseSchema
+
 
 # -----------------
 # 요청 DTO (Request)
@@ -12,6 +16,7 @@ class UserInstitutionCreate(BaseModel):
     institution_id: int = Field(..., description="기관 ID (FK)")
     local_id: str = Field(..., max_length=100)
     student_id: str = Field(..., max_length=100)
+
 
 # -----------------
 # 응답 DTO (Response)
