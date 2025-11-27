@@ -11,8 +11,8 @@ from app.routers import admin, general
 async def lifespan(app: FastAPI):
     try:
         await init_db()
-    except Exception:
-        print("Database initialization skipped.")
+    except Exception as exception:
+        raise exception
     yield
     print("Application shutdown complete.")
 
