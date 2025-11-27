@@ -28,7 +28,7 @@ class Settings(BaseSettings):
     # 4. 흩어진 정보들을 모아서 'DB 접속 주소'를 자동으로 만드는 함수
     @property
     def SQLALCHEMY_DATABASE_URL(self) -> str:
-        return f"mysql+pymysql://{self.DB_USER}:{self.DB_PASSWORD}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
+        return f"mysql+asyncmy://{self.DB_USER}:{self.DB_PASSWORD}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
 
 
 # 설정 인스턴스 생성
