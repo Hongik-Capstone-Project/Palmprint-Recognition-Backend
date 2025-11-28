@@ -5,6 +5,7 @@ uvicorn[standard]==0.30.0
 # ORM & 데이터베이스
 SQLAlchemy==2.0.32
 asyncmy==0.2.9
+greenlet==3.0.3
 
 # 환경변수 및 설정
 pydantic-settings==2.2.1
