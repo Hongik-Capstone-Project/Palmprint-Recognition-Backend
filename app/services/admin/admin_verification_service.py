@@ -1,7 +1,7 @@
 from fastapi import HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession as Session
 
-from app.models import AuthLog  # ORM 모델
+from app.models import AuthLog  # ORM 모델.
 from app.repositories import AuthLogRepository  # 가상의 레포지토리
 from app.schemas.auth_log import AuthLogResponse
 

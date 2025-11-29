@@ -9,7 +9,7 @@ router = APIRouter(prefix="/api/admin/verifications", tags=["Admin-Verifications
 
 
 async def get_db_session():
-    # 실제 세션 yield 로직
+    # 실제 세션 yield logic
     pass
 
 
