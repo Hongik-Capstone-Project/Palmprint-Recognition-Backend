@@ -17,7 +17,7 @@ router = APIRouter(prefix="/api/admin/users", tags=["Admin-Users"])
 
 # 세션 주입을 위한 임시 함수 (실제로는 Dependency Injection 설정 파일에서 제공됨)
 async def get_db_session():
-    # 실제 DB 세션을 yield 하는 로직이 들어감
+    # 실제 DB 세션을 yield 하는 logic이 들어감
     # yield session
     pass
 

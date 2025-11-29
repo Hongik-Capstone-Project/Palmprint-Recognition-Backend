@@ -24,7 +24,7 @@ class AdminUserService:
 
     async def get_users(self):
         # 쿼리 생성 후 세션으로 실행
-        # relationships 로드를 위해 options(selectinload(User.relationships)) 추가 필요
+        # relationships 로드를 위해 options(selectinload(User.relationships)) 추가 필요.
         query = self.user_repo.get_query()
         result = await self.session.execute(query)
         return result.scalars().unique().all()
