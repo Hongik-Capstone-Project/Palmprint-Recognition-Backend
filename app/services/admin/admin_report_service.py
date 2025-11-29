@@ -31,7 +31,7 @@ class AdminReportService:
         if not report:
             raise HTTPException(status_code=404, detail="Report not found")
 
-        report.status = status_str  # ORM 모델 필드 직접 수정
+        report.status = status_str  # ORM 모델 필드 직접 수정.
         await self.session.commit()
         await self.session.refresh(report)
         return report
