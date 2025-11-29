@@ -55,3 +55,6 @@ class AdminDeviceService:
 
         await self.session.delete(device)
         await self.session.commit()
+
+
+#
