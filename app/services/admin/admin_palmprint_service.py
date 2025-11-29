@@ -14,7 +14,7 @@ class AdminPalmprintService:
         # 모든 사용자 (Palmprint 데이터 존재 여부 확인 쿼리 필요)
         query = self.user_repo.get_query()
         result = await self.session.execute(query)
-        # 실제로는 여기서 필요한 필터링 및 DTO 변환 로직이 들어감
+        # 실제로는 여기서 필요한 필터링 및 DTO 변환 logic 들어감
         return ["List of filtered palmprint data"]
 
     async def get_user_palmprint(self, user_id: int):

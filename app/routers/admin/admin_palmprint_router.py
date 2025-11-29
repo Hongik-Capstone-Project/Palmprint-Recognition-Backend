@@ -8,7 +8,7 @@ router = APIRouter(prefix="/api/admin/palmprints", tags=["Admin-Palmprints"])
 
 
 async def get_db_session():
-    # 실제 세션 yield 로직
+    # 실제 세션 yield logic
     pass
 
 
