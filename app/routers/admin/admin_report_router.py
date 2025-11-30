@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.ext.asyncio import AsyncSession as Session
 
+from app.core.database import get_db
 from app.repositories.report_repository import ReportRepository
 from app.schemas.report import ReportResponse
 from app.services.admin.admin_report_service import AdminReportService
@@ -8,13 +9,8 @@ from app.services.admin.admin_report_service import AdminReportService
 router = APIRouter(prefix="/api/admin/reports", tags=["Admin-Reports"])
 
 
-async def get_db_session():
-    # 실제 세션 yield logic
-    pass
-
-
 def get_admin_report_service(
-    session: Session = Depends(get_db_session),
+    session: Session = Depends(get_db),
     report_repo: ReportRepository = Depends(ReportRepository),
 ):
     return AdminReportService(session, report_repo)

@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.ext.asyncio import AsyncSession as Session
 
+from app.core.database import get_db
 from app.repositories.device_repository import DeviceRepository
 from app.schemas.device import DeviceCreate, DeviceResponse, DeviceUpdate
 from app.services.admin.admin_device_service import AdminDeviceService
@@ -8,13 +9,8 @@ from app.services.admin.admin_device_service import AdminDeviceService
 router = APIRouter(prefix="/api/admin/devices", tags=["Admin-Devices"])
 
 
-async def get_db_session():
-    # 실제 세션 yield logic
-    pass
-
-
 def get_admin_device_service(
-    session: Session = Depends(get_db_session),
+    session: Session = Depends(get_db),
     device_repo: DeviceRepository = Depends(DeviceRepository),
 ):
     return AdminDeviceService(session, device_repo)

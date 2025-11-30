@@ -6,8 +6,6 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.models.base import Base
 
-from .user import User
-
 
 class PaymentMethod(Base):
     __tablename__ = "payment_methods"

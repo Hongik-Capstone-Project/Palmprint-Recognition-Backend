@@ -1,9 +1,7 @@
 from fastapi import HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession as Session
 
-from app.models.report import Report
 from app.repositories.report_repository import ReportRepository
-from app.schemas.report import ReportResponse
 
 
 class AdminReportService:

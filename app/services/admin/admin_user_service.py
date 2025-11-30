@@ -2,7 +2,6 @@ from fastapi import HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession as Session  # DB 세션 타입 가정
 
 from app.models.user import User  # ORM Model import (관계 로딩을 위해 필요)
-from app.repositories.user_institution_repository import UserInstitutionRepository
 from app.repositories.user_institution_role_repository import (
     UserInstitutionRoleRepository,
 )
