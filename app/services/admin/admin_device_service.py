@@ -1,4 +1,5 @@
 from fastapi import HTTPException
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession as Session
 
 from app.models.device import Device
@@ -11,10 +12,8 @@ class AdminDeviceService:
         self.session = session
         self.device_repo = device_repo
 
-    async def get_devices(self):
-        query = self.device_repo.get_query()
-        result = await self.session.execute(query)
-        return result.scalars().unique().all()
+    def get_devices_query(self):
+        return select(Device)
 
     async def get_device_detail(self, device_id: int):
         query = self.device_repo.get_by_id_query(device_id)

@@ -1,4 +1,6 @@
 from fastapi import APIRouter, Depends, status
+from fastapi_pagination import Page, Params
+from fastapi_pagination.ext.sqlalchemy import paginate
 from sqlalchemy.ext.asyncio import AsyncSession as Session
 
 from app.core.database import get_db
@@ -16,9 +18,13 @@ def get_admin_device_service(
     return AdminDeviceService(session, device_repo)
 
 
-@router.get("", response_model=list[DeviceResponse], status_code=status.HTTP_200_OK)
-async def get_devices(service: AdminDeviceService = Depends(get_admin_device_service)):
-    return await service.get_devices()
+@router.get("", response_model=Page[DeviceResponse], status_code=status.HTTP_200_OK)
+async def get_devices(
+    params: Params = Depends(),
+    service: AdminDeviceService = Depends(get_admin_device_service),
+):
+    query = service.get_devices_query()
+    return await paginate(service.session, query)
 
 
 @router.get(

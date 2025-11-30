@@ -1,6 +1,8 @@
 from fastapi import HTTPException
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession as Session
 
+from app.models.report import Report
 from app.repositories.report_repository import ReportRepository
 
 
@@ -9,10 +11,8 @@ class AdminReportService:
         self.session = session
         self.report_repo = report_repo
 
-    async def get_reports(self):
-        query = self.report_repo.get_query()
-        result = await self.session.execute(query)
-        return result.scalars().unique().all()
+    def get_reports_query(self):
+        return select(Report)
 
     async def get_report_detail(self, report_id: int):
         query = self.report_repo.get_by_id_query(report_id)
@@ -29,7 +29,7 @@ class AdminReportService:
         if not report:
             raise HTTPException(status_code=404, detail="Report not found")
 
-        report.status = status_str  # ORM 모델 필드 직접 수정.
+        report.status = status_str
         await self.session.commit()
         await self.session.refresh(report)
         return report

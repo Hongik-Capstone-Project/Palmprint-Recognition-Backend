@@ -1,5 +1,7 @@
 from fastapi import APIRouter, Depends, status
-from sqlalchemy.ext.asyncio import AsyncSession as Session  # 세션 타입
+from fastapi_pagination import Page, Params
+from fastapi_pagination.ext.sqlalchemy import paginate
+from sqlalchemy.ext.asyncio import AsyncSession as Session
 
 from app.core.database import get_db
 from app.repositories.user_institution_role_repository import (
@@ -22,9 +24,8 @@ from app.services.admin.admin_user_service import AdminUserService
 router = APIRouter(prefix="/api/admin/users", tags=["Admin-Users"])
 
 
-# DI Provider 정의
 def get_admin_user_service(
-    session: Session = Depends(get_db),  # 세션 주입
+    session: Session = Depends(get_db),
     user_repo: UserRepository = Depends(UserRepository),
     user_role_repo: UserInstitutionRoleRepository = Depends(
         UserInstitutionRoleRepository
@@ -33,9 +34,13 @@ def get_admin_user_service(
     return AdminUserService(session, user_repo, user_role_repo)
 
 
-@router.get("", response_model=list[UserListResponse], status_code=status.HTTP_200_OK)
-async def get_users(service: AdminUserService = Depends(get_admin_user_service)):
-    return await service.get_users()
+@router.get("", response_model=Page[UserListResponse], status_code=status.HTTP_200_OK)
+async def get_users(
+    params: Params = Depends(),
+    service: AdminUserService = Depends(get_admin_user_service),
+):
+    query = service.get_users_query()
+    return await paginate(service.session, query)
 
 
 @router.get("/{user_id}", response_model=UserResponse, status_code=status.HTTP_200_OK)

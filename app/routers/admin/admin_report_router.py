@@ -1,4 +1,6 @@
 from fastapi import APIRouter, Depends, status
+from fastapi_pagination import Page, Params
+from fastapi_pagination.ext.sqlalchemy import paginate
 from sqlalchemy.ext.asyncio import AsyncSession as Session
 
 from app.core.database import get_db
@@ -16,9 +18,13 @@ def get_admin_report_service(
     return AdminReportService(session, report_repo)
 
 
-@router.get("", response_model=list[ReportResponse], status_code=status.HTTP_200_OK)
-async def get_reports(service: AdminReportService = Depends(get_admin_report_service)):
-    return await service.get_reports()
+@router.get("", response_model=Page[ReportResponse], status_code=status.HTTP_200_OK)
+async def get_reports(
+    params: Params = Depends(),
+    service: AdminReportService = Depends(get_admin_report_service),
+):
+    query = service.get_reports_query()
+    return await paginate(service.session, query)
 
 
 @router.get(
