@@ -79,12 +79,9 @@ class AdminUserService:
         return {"message": "User deleted successfully"}
 
     async def grant_user_role(self, user_id: int, role_data: UserInstitutionRoleCreate):
-        if role_data.user_id != user_id:
-            raise HTTPException(status_code=400, detail="User ID mismatch")
-
         # UserInstitutionRole 모델 생성 및 커밋
         new_role_model = self.user_role_repo.model(
-            **role_data.model_dump()
+            user_id=user_id, **role_data.model_dump()
         )  # model 속성은 BaseRepository에 있음
         self.session.add(new_role_model)
         await self.session.commit()

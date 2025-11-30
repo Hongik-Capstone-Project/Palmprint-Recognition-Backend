@@ -13,7 +13,6 @@ from app.schemas.base import BaseSchema
 # -----------------
 class UserInstitutionRoleCreate(BaseModel):
     role_id: int = Field(..., description="역할 ID (FK)")
-    user_id: int = Field(..., description="사용자 ID (FK)")
     institution_id: int = Field(..., description="기관 ID (FK)")
 
 

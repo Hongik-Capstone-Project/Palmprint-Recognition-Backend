@@ -11,7 +11,6 @@ class Report(Base):
     # Foreign Key (FK) 설정
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), index=True)
     auth_log_id: Mapped[int] = mapped_column(index=True)
-    # auth_log_id: Mapped[int] = mapped_column(ForeignKey("auth_logs.id"), index=True)
 
     report_type: Mapped[str] = mapped_column(String(100))
     description: Mapped[str] = mapped_column(Text)

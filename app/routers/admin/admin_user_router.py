@@ -6,7 +6,13 @@ from app.repositories.user_institution_role_repository import (
     UserInstitutionRoleRepository,
 )
 from app.repositories.user_repository import UserRepository
-from app.schemas.user import UserCreate, UserResponse, UserUpdate
+from app.schemas.user import (
+    UserCreate,
+    UserCreateResponse,
+    UserListResponse,
+    UserResponse,
+    UserUpdate,
+)
 from app.schemas.user_institution_role import (
     UserInstitutionRoleCreate,
     UserInstitutionRoleResponse,
@@ -27,7 +33,7 @@ def get_admin_user_service(
     return AdminUserService(session, user_repo, user_role_repo)
 
 
-@router.get("", response_model=list[UserResponse], status_code=status.HTTP_200_OK)
+@router.get("", response_model=list[UserListResponse], status_code=status.HTTP_200_OK)
 async def get_users(service: AdminUserService = Depends(get_admin_user_service)):
     return await service.get_users()
 
@@ -39,7 +45,7 @@ async def get_user_detail(
     return await service.get_user_detail(user_id)
 
 
-@router.post("", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
+@router.post("", response_model=UserCreateResponse, status_code=status.HTTP_201_CREATED)
 async def register_user(
     data: UserCreate, service: AdminUserService = Depends(get_admin_user_service)
 ):
