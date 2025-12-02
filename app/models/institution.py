@@ -1,14 +1,10 @@
 # app/models/institution.py
-from typing import List, Optional
+from typing import Optional
 
 from sqlalchemy import String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.models.base import Base
-
-from .device import Device
-from .user_institution import UserInstitution
-from .user_institution_role import UserInstitutionRole
 
 
 class Institution(Base):
@@ -18,10 +14,10 @@ class Institution(Base):
     address: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
 
     # Relationships
-    user_institutions: Mapped[List["UserInstitution"]] = relationship(
+    user_institutions: Mapped[list["UserInstitution"]] = relationship(
         back_populates="institution"
     )
-    user_institution_roles: Mapped[List["UserInstitutionRole"]] = relationship(
+    user_institution_roles: Mapped[list["UserInstitutionRole"]] = relationship(
         back_populates="institution"
     )
-    devices: Mapped[List["Device"]] = relationship(back_populates="institution")
+    devices: Mapped[list["Device"]] = relationship(back_populates="institution")

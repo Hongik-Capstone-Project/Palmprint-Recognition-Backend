@@ -2,7 +2,7 @@
 
 from __future__ import annotations  # 💡 추가: 관계 모델 참조를 위해 필요
 
-from typing import List, Optional
+from typing import Optional
 
 from pydantic import BaseModel, EmailStr, Field
 
@@ -46,9 +46,21 @@ class UserResponse(BaseSchema):
 
     # 💡 ODM으로 전환된 클래스(AuthLog, PaymentHistory) 관계는 제거했습니다.
     # 💡 RDB에 남아있는 관계 필드 추가 (List[다른 DTO 클래스])
-    payment_methods: List[PaymentMethodResponse] = Field(default_factory=list)
-    reports: List[ReportResponse] = Field(default_factory=list)
-    user_institutions: List[UserInstitutionResponse] = Field(default_factory=list)
-    user_institution_roles: List[UserInstitutionRoleResponse] = Field(
+    payment_methods: list[PaymentMethodResponse] = Field(default_factory=list)
+    reports: list[ReportResponse] = Field(default_factory=list)
+    user_institutions: list[UserInstitutionResponse] = Field(default_factory=list)
+    user_institution_roles: list[UserInstitutionRoleResponse] = Field(
         default_factory=list
     )
+
+
+class UserCreateResponse(BaseSchema):
+    email: str
+    name: str
+    phone_number: Optional[str]
+
+
+class UserListResponse(BaseSchema):
+    email: str
+    name: str
+    phone_number: Optional[str]

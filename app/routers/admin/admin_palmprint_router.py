@@ -1,18 +1,32 @@
-from fastapi import APIRouter, status
+from fastapi import APIRouter, Depends, status
+from sqlalchemy.ext.asyncio import AsyncSession as Session
 
-router = APIRouter(prefix="/api/admin/palmprints", tags=["Admin-Palmprints"])
+from app.core.database import get_db
+from app.schemas.auth_log import AuthLogResponse
+from app.services.admin.admin_verification_service import AdminVerificationService
 
-
-@router.get("", status_code=status.HTTP_200_OK)
-async def get_all_palmprints():
-    pass
-
-
-@router.post("/{user_id}", status_code=status.HTTP_200_OK)
-async def register_user_palmprint(user_id: int):
-    pass
+router = APIRouter(prefix="/api/admin/verifications", tags=["Admin-Verifications"])
 
 
-@router.delete("/{user_id}", status_code=status.HTTP_204_NO_CONTENT)
-async def delete_user_palmprint(user_id: int):
-    pass
+# def get_admin_verification_service(
+#     session: Session = Depends(get_db),
+#     auth_log_repo: AuthLogRepository = Depends(AuthLogRepository),
+# ):
+#     return AdminVerificationService(session, auth_log_repo)
+
+
+# @router.get("", response_model=list[AuthLogResponse], status_code=status.HTTP_200_OK)
+# async def get_all_verifications(
+#     service: AdminVerificationService = Depends(get_admin_verification_service),
+# ):
+#     return await service.get_all_verifications()
+
+
+# @router.get(
+#     "/{verification_id}", response_model=AuthLogResponse, status_code=status.HTTP_200_OK
+# )
+# async def get_verification_detail(
+#     verification_id: int,
+#     service: AdminVerificationService = Depends(get_admin_verification_service),
+# ):
+#     return await service.get_verification_detail(verification_id)

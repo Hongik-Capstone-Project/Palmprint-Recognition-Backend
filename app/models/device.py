@@ -6,8 +6,6 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.models.base import Base
 
-from .institution import Institution
-
 
 class Device(Base):
     __tablename__ = "devices"

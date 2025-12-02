@@ -1,16 +1,9 @@
-# app/models/user.py
+from typing import Optional
 
-from typing import List, Optional
-
-from sqlalchemy import Boolean, String, text
+from sqlalchemy import String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.models.base import Base
-
-from .payment_method import PaymentMethod
-from .report import Report
-from .user_institution import UserInstitution
-from .user_institution_role import UserInstitutionRole
 
 
 # User 엔티티 정의
@@ -36,7 +29,7 @@ class User(Base):
     # 💡 관계 설정 (RelationShips): User가 다른 테이블을 참조하는 관계
 
     # PaymentMethods와의 1:N 관계 설정
-    payment_methods: Mapped[List["PaymentMethod"]] = relationship(back_populates="user")
+    payment_methods: Mapped[list["PaymentMethod"]] = relationship(back_populates="user")
 
     # PaymentHistories와의 1:N 관계 설정
     # payment_histories: Mapped[List["PaymentHistory"]] = relationship(back_populates="user")
@@ -45,15 +38,15 @@ class User(Base):
     # auth_logs: Mapped[List["AuthLog"]] = relationship(back_populates="user")
 
     # Reports와의 1:N 관계 설정
-    reports: Mapped[List["Report"]] = relationship(back_populates="user")
+    reports: Mapped[list["Report"]] = relationship(back_populates="user")
 
     # UserInstitutions(중간 테이블)과의 M:N 관계를 위한 관계 설정
-    user_institutions: Mapped[List["UserInstitution"]] = relationship(
+    user_institutions: Mapped[list["UserInstitution"]] = relationship(
         back_populates="user"
     )
 
     # UserInstitutionRoles(중간 테이블)과의 M:N 관계를 위한 관계 설정
-    user_institution_roles: Mapped[List["UserInstitutionRole"]] = relationship(
+    user_institution_roles: Mapped[list["UserInstitutionRole"]] = relationship(
         back_populates="user"
     )
 
