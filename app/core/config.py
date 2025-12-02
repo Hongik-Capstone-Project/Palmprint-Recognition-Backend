@@ -1,3 +1,5 @@
+from typing import Optional
+
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -29,6 +31,23 @@ class Settings(BaseSettings):
     @property
     def SQLALCHEMY_DATABASE_URL(self) -> str:
         return f"mysql+asyncmy://{self.DB_USER}:{self.DB_PASSWORD}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
+
+    # MongoDB 추가
+    MONGO_HOST: str
+    MONGO_PORT: int
+    MONGO_DB_NAME: str = "palmprint_recognition"
+    MONGO_USER: Optional[str] = None
+    MONGO_PASSWORD: Optional[str] = None
+
+    @property
+    def MONGO_URL(self):
+        if not self.MONGO_USER:
+            return f"mongodb://{self.MONGO_HOST}:{self.MONGO_PORT}"
+
+        return (
+            f"mongodb://{self.MONGO_USER}:{self.MONGO_PASSWORD}"
+            f"@{self.MONGO_HOST}:{self.MONGO_PORT}/{self.MONGO_DB_NAME}?authSource=admin"
+        )
 
 
 # 설정 인스턴스 생성
