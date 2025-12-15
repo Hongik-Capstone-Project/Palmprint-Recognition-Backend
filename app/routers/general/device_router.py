@@ -1,6 +1,12 @@
-from fastapi import APIRouter, status
+from fastapi import APIRouter, Depends, status
 
-router = APIRouter(prefix="/api/devices", tags=["Devices"])
+from app.core import get_current_payload
+
+router = APIRouter(
+    prefix="/api/devices",
+    tags=["Devices"],
+    dependencies=[Depends(get_current_payload)],
+)
 
 
 @router.post("/verify", status_code=status.HTTP_200_OK)

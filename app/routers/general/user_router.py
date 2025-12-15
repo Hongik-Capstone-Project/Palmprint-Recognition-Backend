@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.ext.asyncio import AsyncSession as Session
 
-from app.core.database import get_db
+from app.core import get_current_payload, get_db
 from app.repositories.user_repository import UserRepository
 from app.schemas.user import UserCreate, UserCreateResponse
 from app.services.general.user_service import UserService
@@ -18,12 +18,14 @@ def get_user_service(
 
 @router.post("", response_model=UserCreateResponse, status_code=status.HTTP_201_CREATED)
 async def signup(
-    payload: UserCreate,
+    data: UserCreate,
     service: UserService = Depends(get_user_service),
 ):
-    return await service.create_user(payload)
+    return await service.create_user(data)
 
 
 @router.delete("/me", status_code=status.HTTP_204_NO_CONTENT)
-async def delete_me():
+async def delete_me(
+    payload=Depends(get_current_payload),
+):
     pass
