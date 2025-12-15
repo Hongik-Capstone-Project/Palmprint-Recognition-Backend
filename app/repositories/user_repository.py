@@ -10,25 +10,19 @@ class UserRepository(BaseRepository[User]):
     def __init__(self):
         super().__init__(User)
 
-    def get_query(self):
-        return select(User).options(
+    def _with_relationships(self, stmt):
+        return stmt.options(
             selectinload(User.payment_methods),
             selectinload(User.reports),
             selectinload(User.user_institutions),
             selectinload(User.user_institution_roles),
         )
 
+    def get_query(self):
+        return self._with_relationships(select(User))
+
     def get_by_id_query(self, id: int):
-        return (
-            select(User)
-            .where(User.id == id)
-            .options(
-                selectinload(User.payment_methods),
-                selectinload(User.reports),
-                selectinload(User.user_institutions),
-                selectinload(User.user_institution_roles),
-            )
-        )
+        return self._with_relationships(select(User).where(User.id == id))
 
     def get_by_email_query(self, email: str):
         return self.exact_query(User.email, email)
