@@ -25,7 +25,7 @@ class UserRepository(BaseRepository[User]):
         return self._with_relationships(select(User).where(User.id == id))
 
     def get_by_email_query(self, email: str):
-        return self.exact_query(User.email, email)
+        return self._with_relationships(select(User).where(User.email == email))
 
     def search_by_name_query(self, keyword: str):
         return self.search_query(User.name, keyword)
