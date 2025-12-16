@@ -56,7 +56,7 @@ class UserResponse(BaseSchema):
 
 
 # 💡 명세서에 따르면 유저추가(POST) 응답은 id와 message만 줌
-class UserCreateResponse(BaseModel):
+class CreateResponse(BaseModel):
     id: int
     message: str
 
