@@ -5,15 +5,15 @@ from passlib.context import CryptContext
 
 from app.core.config import settings
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+pwd_context = CryptContext(schemes=["bcrypt_sha256"], deprecated="auto")
 
 
 def verify_password(plain, hashed):
     return pwd_context.verify(plain, hashed)
 
 
-def get_password_hash(password):
-    return pwd_context.hash(password)
+def hash_password(raw_password):
+    return pwd_context.hash(raw_password)
 
 
 def create_access_token(data: dict, expires_delta: int = 3600):
