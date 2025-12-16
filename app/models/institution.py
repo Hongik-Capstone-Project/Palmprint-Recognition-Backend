@@ -1,13 +1,21 @@
 # app/models/institution.py
-from typing import Optional
+from __future__ import annotations
+
+from typing import TYPE_CHECKING, Optional
 
 from sqlalchemy import String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from app.models.base import Base
+from app.models.base import Base, IntPKMixin, TimestampMixin
+
+if TYPE_CHECKING:
+    # 여기에 필요한 모델들 다 import
+    from .device import Device
+    from .user_institution import UserInstitution
+    from .user_institution_role import UserInstitutionRole
 
 
-class Institution(Base):
+class Institution(IntPKMixin, TimestampMixin, Base):
     __tablename__ = "institutions"
 
     name: Mapped[str] = mapped_column(String(255), unique=True)

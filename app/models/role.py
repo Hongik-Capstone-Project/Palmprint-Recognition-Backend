@@ -1,10 +1,18 @@
+# app/models/role.py
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from sqlalchemy import String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from app.models.base import Base
+from app.models.base import Base, IntPKMixin, TimestampMixin
+
+if TYPE_CHECKING:
+    from .user_institution_role import UserInstitutionRole
 
 
-class Role(Base):
+class Role(Base, IntPKMixin, TimestampMixin):
     __tablename__ = "roles"
 
     name: Mapped[str] = mapped_column(String(100), unique=True)

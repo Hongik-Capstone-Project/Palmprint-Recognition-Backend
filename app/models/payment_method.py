@@ -1,13 +1,18 @@
 # app/models/payment_method.py
-from typing import Optional
+from __future__ import annotations
+
+from typing import TYPE_CHECKING, Optional
 
 from sqlalchemy import ForeignKey, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from app.models.base import Base
+from app.models.base import Base, IntPKMixin, TimestampMixin
+
+if TYPE_CHECKING:
+    from .user import User
 
 
-class PaymentMethod(Base):
+class PaymentMethod(Base, IntPKMixin, TimestampMixin):
     __tablename__ = "payment_methods"
 
     # Foreign Key (FK) 설정

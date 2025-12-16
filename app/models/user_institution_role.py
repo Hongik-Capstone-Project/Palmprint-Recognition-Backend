@@ -1,11 +1,20 @@
 # app/models/user_institution_role.py
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from sqlalchemy import ForeignKey, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from app.models.base import Base
+from app.models.base import Base, IntPKMixin, TimestampMixin
+
+if TYPE_CHECKING:
+    from .institution import Institution
+    from .role import Role
+    from .user import User
 
 
-class UserInstitutionRole(Base):
+class UserInstitutionRole(Base, IntPKMixin, TimestampMixin):
     __tablename__ = "user_institution_roles"
 
     # Foreign Key (FK) 설정

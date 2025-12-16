@@ -1,11 +1,19 @@
 # app/models/user_institution.py
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from sqlalchemy import ForeignKey, String, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from app.models.base import Base
+from app.models.base import Base, IntPKMixin, TimestampMixin
+
+if TYPE_CHECKING:
+    from .institution import Institution
+    from .user import User
 
 
-class UserInstitution(Base):
+class UserInstitution(Base, IntPKMixin, TimestampMixin):
     __tablename__ = "user_institutions"
 
     # 기본 PK id 외에 user_id와 institution_id로 복합 키 설정

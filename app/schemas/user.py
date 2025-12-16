@@ -2,7 +2,8 @@
 
 from __future__ import annotations  # 💡 추가: 관계 모델 참조를 위해 필요
 
-from typing import Optional
+from datetime import datetime
+from typing import List, Optional
 
 from pydantic import BaseModel, EmailStr, Field
 
@@ -24,7 +25,6 @@ class UserCreate(BaseModel):
     email: EmailStr = Field(..., max_length=255)
     password: str = Field(..., min_length=8)
     name: str = Field(..., max_length=100)
-    phone_number: Optional[str] = Field(None, max_length=20)
     is_admin: Optional[bool] = Field(False, description="관리자 여부")
 
 
@@ -58,13 +58,8 @@ class UserResponse(BaseSchema):
 # 💡 명세서에 따르면 유저추가(POST) 응답은 id와 message만 줌
 class UserCreateResponse(BaseModel):
     id: int
-    message: str
-
-
-class UserCreateResponse(BaseSchema):
-    email: str
     name: str
-    phone_number: Optional[str]
+    message: str = Field("User created and assigned to institution successfully.")
 
 
 class UserListResponse(BaseSchema):
@@ -73,3 +68,33 @@ class UserListResponse(BaseSchema):
     # 유저 목록에서는 아이디와 이메일만 반환
     # name: str
     # phone_number: Optional[str] = None
+
+
+# -------------------------
+# 관리자 API 응답 DTO
+# -------------------------
+
+
+class AdminUserInstitutionResponse(BaseModel):
+    institution_id: int
+    institution_name: str
+
+
+class AdminUserDetailResponse(BaseSchema):
+    name: str
+    email: EmailStr
+    isPalmRegistered: bool = Field(..., alias="is_palm_registered")
+    user_institutions: List[AdminUserInstitutionResponse] = []
+
+
+class AdminUserListItems(BaseSchema):
+    email: EmailStr
+    name: str
+
+
+class AdminUserListResponse(BaseModel):
+    items: List[AdminUserListItems]
+    total: int
+    page: int
+    size: int
+    pages: int

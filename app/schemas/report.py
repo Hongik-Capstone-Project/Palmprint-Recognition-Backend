@@ -1,7 +1,7 @@
 # app/schemas/report.py
 from __future__ import annotations
 
-from typing import Optional
+from typing import List, Optional
 
 from pydantic import BaseModel, Field
 
@@ -40,3 +40,21 @@ class ReportResponse(BaseSchema):
     report_type: str
     description: str
     status: str
+
+
+# -------------------------
+# 관리자 API 응답 DTO
+# -------------------------
+
+class AdminReportListItems(ReportResponse):
+    pass
+
+class AdminReportListResponse(BaseModel):
+    items: List[AdminReportListItems]
+    total: int
+    page: int
+    size: int
+    pages: int
+
+class AdminReportDetailResponse(ReportResponse):
+    pass

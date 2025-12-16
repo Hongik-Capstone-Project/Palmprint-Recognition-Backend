@@ -1,13 +1,21 @@
-from typing import Optional
+from __future__ import annotations
 
-from sqlalchemy import String
+from typing import TYPE_CHECKING, Optional
+
+from sqlalchemy import Boolean, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from app.models.base import Base
+from app.models.base import Base, IntPKMixin, TimestampMixin
+
+if TYPE_CHECKING:
+    from .payment_method import PaymentMethod  # 필요하면 추가
+    from .report import Report
+    from .user_institution import UserInstitution
+    from .user_institution_role import UserInstitutionRole
 
 
 # User 엔티티 정의
-class User(Base):
+class User(Base, IntPKMixin, TimestampMixin):
     __tablename__ = "users"
 
     # Base 클래스에서 id (PK, BIGINT)와 created_at (DATETIME)을 이미 상속받음
@@ -23,13 +31,17 @@ class User(Base):
     # phone_number는 ERD에 따라 Optional로 설정
     phone_number: Mapped[Optional[str]] = mapped_column(String(20), nullable=True)
 
+    is_admin: Mapped[bool] = mapped_column(Boolean, default=False)
+
     # is_active 필드를 추가하여 계정 활성화 여부를 관리할 수 있습니다 (일반적인 관례)
     # is_active: Mapped[bool] = mapped_column(Boolean, default=True)
 
     # 💡 관계 설정 (RelationShips): User가 다른 테이블을 참조하는 관계
 
     # PaymentMethods와의 1:N 관계 설정
-    payment_methods: Mapped[list["PaymentMethod"]] = relationship(back_populates="user")
+    payment_methods: Mapped[list["PaymentMethod"]] = relationship(
+        back_populates="user", cascade="all, delete-orphan"
+    )
 
     # PaymentHistories와의 1:N 관계 설정
     # payment_histories: Mapped[List["PaymentHistory"]] = relationship(back_populates="user")
