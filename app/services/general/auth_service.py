@@ -69,8 +69,8 @@ class AuthService:
                 detail="Invalid credentials",
             )
 
-        access_expires = 12 * 3600
-        refresh_expires = 14 * 24 * 3600
+        access_expires = 3600
+        refresh_expires = 30 * 24 * 3600
 
         claims = build_user_claims(user)
         jti = uuid.uuid4().hex
@@ -112,7 +112,7 @@ class AuthService:
         if user is None:
             raise HTTPException(status_code=401, detail="Invalid refresh token")
 
-        access_expires = 12 * 3600
+        access_expires = 3600
         jti = payload.get("jti") or uuid.uuid4().hex
         claims = build_user_claims(user)
 
