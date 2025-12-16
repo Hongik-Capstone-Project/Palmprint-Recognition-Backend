@@ -27,5 +27,7 @@ async def signup(
 @router.delete("/me", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_me(
     payload=Depends(_get_current_payload),
+    service: UserService = Depends(get_user_service),
 ):
-    pass
+    await service.delete_me(payload)
+    return None

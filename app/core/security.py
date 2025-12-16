@@ -32,6 +32,8 @@ def create_refresh_token(data: dict, expires_delta: int = 60 * 60 * 24 * 30) -> 
 
 def decode_token(token: str) -> dict:
     try:
+        if token.lower().startswith("bearer "):
+            token = token[7:].strip()
         return jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
     except JWTError:
         return {}
