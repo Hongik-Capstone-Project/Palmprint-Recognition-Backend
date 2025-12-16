@@ -9,11 +9,11 @@ router = APIRouter(
 )
 
 
-@router.get("", status_code=status.HTTP_200_OK)
-async def get_verifications():
-    pass
+# @router.get("", status_code=status.HTTP_200_OK)
+# async def get_verifications():
+#     pass
 
 
-@router.post("/{log_id}/report", status_code=status.HTTP_201_CREATED)
-async def report_verification(log_id: int):
-    pass
+# @router.post("/{log_id}/report", status_code=status.HTTP_201_CREATED)
+# async def report_verification(log_id: int):
+#     pass
