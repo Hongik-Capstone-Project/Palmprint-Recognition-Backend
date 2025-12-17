@@ -24,9 +24,7 @@ class UserCreate(BaseModel):
     email: EmailStr = Field(..., max_length=255)
     password: str = Field(..., min_length=8)
     name: str = Field(..., max_length=100)
-    phone_number: Optional[str] = Field(None, max_length=20)
-    is_admin: Optional[bool] = Field(False, description="관리자 여부")
-
+#회원가입 Request Body: name, email, password뿐
 
 class UserUpdate(BaseModel):
     email: Optional[EmailStr] = Field(None, max_length=255)
@@ -58,8 +56,7 @@ class UserResponse(BaseSchema):
 
 # 💡 명세서에 따르면 유저추가(POST) 응답은 id와 message만 줌
 class UserCreateResponse(BaseModel):
-    id: int
-    name: str
+    user_id: str
 
 
 class UserListResponse(BaseSchema):

@@ -7,6 +7,7 @@ from pydantic import BaseModel, Field, field_serializer
 
 from app.schemas.base import BaseSchema
 from app.schemas.objectid import PyObjectId
+from app.schemas.user_institution import UserInstitutionResponse
 
 
 # ---------------------------------------------------------
@@ -26,18 +27,15 @@ class VerificationSummaryResponse(BaseModel):
 
 
 class AuthLogResponse(BaseSchema):
-    id: PyObjectId = Field(alias="_id")
-
-    # 💡 [와이어프레임 요구사항] 화면 표시 필드
-    # 로그 DB(MongoDB)에는 device_id만 있지만,
-    # 서비스 계층에서 SQL 조인 후 '기관명'과 '위치'를 채워서 응답해야 합니다.
+    log_id: PyObjectId = Field(alias="_id")
     user_id: Optional[int] = Field(None, description="유저 ID (실패 시 없을 수 있음)")
-    institution_name: str = Field(..., description="기관명 (Device 정보 Join)")
-    location: str = Field(..., description="위치 (Device 정보 Join)")
-    is_success: bool = Field(..., description="인증 성공 여부")
-    created_at: datetime = Field(default_factory=datetime.utcnow)
+    device_id: str
+    institution: UserInstitutionResponse
+    auth_type: str
+    result: bool = Field(..., alias="is_success")
+    verified_at: datetime = Field(..., alias="created_at")
 
-    @field_serializer("id")
+    @field_serializer("log_id")
     def serialize_objectid(self, oid: PyObjectId, _info):
         return str(oid)
 

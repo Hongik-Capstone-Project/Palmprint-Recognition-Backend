@@ -10,6 +10,7 @@ class AuthLog(Document):
     device_id: int = Field(...)
     user_id: int = Field(...)
     is_success: bool = Field(...)
+    auth_type: str = Field(...)
     created_at: datetime = Field(default_factory=datetime.utcnow)
 
     class Settings:

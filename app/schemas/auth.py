@@ -17,4 +17,4 @@ class TokenResponse(BaseModel):
     refresh_token: str
     token_type: str = "bearer"
     expires_in: int
-    refresh_expires_in: Optional[int] = None
+    refresh_expires_in: int  # 반드시 존재하는 토큰이므로 Optional 아님

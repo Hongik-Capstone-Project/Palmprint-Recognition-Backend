@@ -21,13 +21,10 @@ class DeviceCreate(BaseModel):
 
 # 명세서와 와이어프레임에는 수정 기능이 없지만 나중에 필요할지 몰라 남겨놨습니다
 class DeviceUpdate(BaseModel):
-    device_id: Optional[int] = Field(
-        ..., max_length=100, description="디바이스 식별 ID (예: '11')"
-    )
-    institution_id: Optional[int] = Field(..., description="기관 ID (FK)")
-    # firmware_version: Optional[str] = Field(None, max_length=100)
-    location: Optional[str] = Field(None, max_length=255)
-    # status: Optional[str] = Field(None, max_length=50)
+    device_id: str
+    institution: str
+    palmprint_data: str
+    auth_type: str
 
 
 # -----------------
