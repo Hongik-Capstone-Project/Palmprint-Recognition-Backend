@@ -24,7 +24,10 @@ class UserCreate(BaseModel):
     email: EmailStr = Field(..., max_length=255)
     password: str = Field(..., min_length=8)
     name: str = Field(..., max_length=100)
-#회원가입 Request Body: name, email, password뿐
+
+
+# 회원가입 Request Body: name, email, password뿐
+
 
 class UserUpdate(BaseModel):
     email: Optional[EmailStr] = Field(None, max_length=255)
@@ -57,11 +60,12 @@ class UserResponse(BaseSchema):
 # 💡 명세서에 따르면 유저추가(POST) 응답은 id와 message만 줌
 class UserCreateResponse(BaseModel):
     user_id: str
+    name: str
 
 
 class UserListResponse(BaseSchema):
     id: int
     email: str
     # 유저 목록에서는 아이디와 이메일만 반환
-    # name: str
+    name: str
     # phone_number: Optional[str] = None

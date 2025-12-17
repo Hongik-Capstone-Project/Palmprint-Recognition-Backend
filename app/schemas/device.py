@@ -30,28 +30,9 @@ class DeviceUpdate(BaseModel):
 # -----------------
 # 응답 DTO (Response)
 # -----------------
-# 디바이스 추가 성공 (POST 201)
-# 명세서: id, institution_name, location, created_at
-class DeviceCreateResponse(BaseSchema):
-    # BaseSchema가 id, created_at을 포함함
-    device_id: int  # 명세서엔 없지만 생성된 ID 식별을 위해 통상적으로 포함
-    institution_name: str
-    location: Optional[str]
 
 
-# 디바이스 목록 조회 (GET List)
-# 명세서: id, device_id, institution_name, location, created_at, institution_id
-class DeviceListResponse(BaseSchema):
-    # BaseSchema가 id, created_at을 포함함
-    device_id: int
-    institution_name: str
-    location: Optional[str]
-
-    # 💡 명세서 주석에 "status는 화면에 표시되지 않음"이라고 되어 있어 주석 처리
-    # status: Optional[str]
-
-
-# 디바이스 상세 조회 (GET Detail)
+# 디바이스 추가, 목록 조회, 상세 조회 (GET Detail)
 # 명세서: id, device_id, institution_name, location, created_at
 # (목록 조회와 달리 institution_id가 없음)
 class DeviceResponse(BaseSchema):

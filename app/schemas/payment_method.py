@@ -1,4 +1,3 @@
-from pydantic import Field
 # app/schemas/payment_method.py
 from __future__ import annotations
 
@@ -16,6 +15,12 @@ class PaymentMethodCreate(BaseModel):
     card_name: str
     card_id: str
 
+
+class PaymentMethodUpdate(BaseModel):
+    pass
+
+
+# uvicorn 테스트를 위해 작성한 빈 클래스입니다.
 
 
 # -----------------

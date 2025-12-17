@@ -1,7 +1,7 @@
 # app/schemas/auth_log.py
 
 from datetime import datetime
-from typing import Optional, List
+from typing import List, Optional
 
 from pydantic import BaseModel, Field, field_serializer
 
@@ -22,11 +22,12 @@ class VerificationSummaryResponse(BaseModel):
 
 
 # ---------------------------------------------------------
-# 2. user 인증 로그 리스트 
+# 2. user 인증 로그 리스트
 # ---------------------------------------------------------
 
+
 # 일반 user 인증 내역 조회
-class AuthLogItemResponse(BaseSchema): 
+class AuthLogItemResponse(BaseSchema):
     log_id: PyObjectId = Field(alias="_id")
     user_id: Optional[int] = Field(None, description="유저 ID (실패 시 없을 수 있음)")
     device_id: str
@@ -45,16 +46,18 @@ class AuthLogItemResponse(BaseSchema):
         "from_attributes": True,
     }
 
+
 # 일반 user 인증 내역 조회 응답
 class AuthLogDataResponse(BaseModel):
     user_id: str
-    verifications: List[AuthLogItemResponse] = Field(default_factory=list) 
+    verifications: List[AuthLogItemResponse] = Field(default_factory=list)
     page: int
     size: int
     total: int
     pages: int
     next: Optional[str]
     previous: Optional[str]
+
 
 # 일반 user 인증 내역 API 전체 응답
 class AuthLogAPIResponse(BaseModel):
@@ -66,18 +69,9 @@ class AuthLogAPIResponse(BaseModel):
 # 3. 관리자 인증 내역 조회 (하단 테이블)
 # ---------------------------------------------------------
 
+
 class AdminVerificationItemResponse(BaseModel):
     user_id: int
     institution_name: str
     location: str
     is_success: bool
-
-class AdminVerificationListResponse(BaseModel):
-    items: List[AdminVerificationItemResponse]
-    total: int
-    page: int
-    size: int
-    pages: int
-
-
-
