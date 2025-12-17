@@ -1,11 +1,11 @@
 from fastapi import APIRouter, Depends, status
 
-from app.core import get_current_payload
+from app.core import _get_current_payload
 
 router = APIRouter(
     prefix="/api/devices",
     tags=["Devices"],
-    dependencies=[Depends(get_current_payload)],
+    dependencies=[Depends(_get_current_payload)],
 )
 
 

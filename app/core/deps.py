@@ -6,7 +6,7 @@ from app.core.security import decode_token
 security = HTTPBearer(auto_error=False)
 
 
-def get_current_payload(credentials: HTTPAuthorizationCredentials = Depends(security)):
+def _get_current_payload(credentials: HTTPAuthorizationCredentials = Depends(security)):
     if credentials is None:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="Not authenticated"
@@ -28,7 +28,7 @@ def get_current_payload(credentials: HTTPAuthorizationCredentials = Depends(secu
     return payload
 
 
-def require_admin(payload=Depends(get_current_payload)):
+def _require_admin(payload=Depends(_get_current_payload)):
     user = payload.get("user") or {}
     if user.get("role") != "admin":
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Admin only")

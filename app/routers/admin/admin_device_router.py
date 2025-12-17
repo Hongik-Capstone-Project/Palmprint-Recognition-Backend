@@ -3,7 +3,7 @@ from fastapi_pagination import Page, Params
 from fastapi_pagination.ext.sqlalchemy import paginate
 from sqlalchemy.ext.asyncio import AsyncSession as Session
 
-from app.core import get_db, require_admin
+from app.core import _require_admin, get_db
 from app.repositories.device_repository import DeviceRepository
 from app.schemas.device import DeviceCreate, DeviceResponse, DeviceUpdate
 from app.services.admin.admin_device_service import AdminDeviceService
@@ -11,7 +11,7 @@ from app.services.admin.admin_device_service import AdminDeviceService
 router = APIRouter(
     prefix="/api/admin/devices",
     tags=["Admin-Devices"],
-    dependencies=[Depends(require_admin)],
+    dependencies=[Depends(_require_admin)],
 )
 
 

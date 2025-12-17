@@ -1,5 +1,5 @@
 from .config import settings
 from .database import get_db, init_db
-from .deps import get_current_payload, require_admin
+from .deps import _get_current_payload, _require_admin
 
-__all__ = ["settings", "get_db", "init_db", "get_current_payload", "require_admin"]
+__all__ = ["settings", "get_db", "init_db", "_get_current_payload", "_require_admin"]

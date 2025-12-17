@@ -3,7 +3,7 @@ from fastapi_pagination import Page, Params
 from fastapi_pagination.ext.sqlalchemy import paginate
 from sqlalchemy.ext.asyncio import AsyncSession as Session
 
-from app.core import get_db, require_admin
+from app.core import _require_admin, get_db
 from app.repositories.user_institution_role_repository import (
     UserInstitutionRoleRepository,
 )
@@ -24,7 +24,7 @@ from app.services.admin.admin_user_service import AdminUserService
 router = APIRouter(
     prefix="/api/admin/users",
     tags=["Admin-Users"],
-    dependencies=[Depends(require_admin)],
+    dependencies=[Depends(_require_admin)],
 )
 
 

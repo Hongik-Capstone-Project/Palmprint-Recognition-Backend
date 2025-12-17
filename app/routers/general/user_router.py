@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.ext.asyncio import AsyncSession as Session
 
-from app.core import get_current_payload, get_db
+from app.core import _get_current_payload, get_db
 from app.repositories.user_repository import UserRepository
 from app.schemas.user import UserCreate, UserCreateResponse
 from app.services.general.user_service import UserService
@@ -26,6 +26,6 @@ async def signup(
 
 @router.delete("/me", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_me(
-    payload=Depends(get_current_payload),
+    payload=Depends(_get_current_payload),
 ):
     pass
