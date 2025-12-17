@@ -1,5 +1,3 @@
-# app/schemas/__init__.py
-
 from .base import BaseSchema
 from .device import DeviceCreate, DeviceResponse, DeviceUpdate
 from .institution import InstitutionCreate, InstitutionResponse

@@ -26,8 +26,7 @@ def build_user_claims(user: User) -> dict:
         user_institutions.append(
             {
                 "institution_id": ui.institution_id,
-                "local_id": ui.local_id,
-                "student_id": ui.student_id,
+                "institution_user_id": ui.institution_user_id,
             }
         )
 

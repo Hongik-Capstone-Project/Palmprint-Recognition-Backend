@@ -21,14 +21,10 @@ class UserInstitutionRepository(BaseRepository[UserInstitution]):
             UserInstitution.institution_id == institution_id,
         )
 
-    def get_by_local_id_query(self, local_id: str):
-        return self.exact_query(UserInstitution.local_id, local_id)
+    def get_by_institution_user_id_query(self, institution_user_id: str):
+        return self.exact_query(
+            UserInstitution.institution_user_id, institution_user_id
+        )
 
-    def get_by_student_id_query(self, student_id: str):
-        return self.exact_query(UserInstitution.student_id, student_id)
-
-    def search_by_local_id_query(self, keyword: str):
-        return self.search_query(UserInstitution.local_id, keyword)
-
-    def search_by_student_id_query(self, keyword: str):
-        return self.search_query(UserInstitution.student_id, keyword)
+    def search_by_institution_user_id_query(self, keyword: str):
+        return self.search_query(UserInstitution.institution_user_id, keyword)

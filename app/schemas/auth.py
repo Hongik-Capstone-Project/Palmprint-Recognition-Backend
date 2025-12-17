@@ -1,5 +1,3 @@
-from typing import Optional
-
 from pydantic import BaseModel, EmailStr, Field
 
 
@@ -17,4 +15,4 @@ class TokenResponse(BaseModel):
     refresh_token: str
     token_type: str = "bearer"
     expires_in: int
-    refresh_expires_in: Optional[int] = None
+    refresh_expires_in: int
