@@ -8,7 +8,7 @@ from app.schemas.objectid import PyObjectId
 
 
 class PaymentHistoryResponse(BaseSchema):
-    id: PyObjectId = Field(alias="_id")
+    id: PyObjectId = Field(...)
 
     user_id: int
     payment_method_id: int

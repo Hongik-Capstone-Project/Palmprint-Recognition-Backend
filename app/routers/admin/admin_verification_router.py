@@ -1,8 +1,10 @@
+from beanie import PydanticObjectId
 from fastapi import APIRouter, Depends, status
-from sqlalchemy.ext.asyncio import AsyncSession as Session
+from fastapi_pagination import Page, Params, paginate
 
-from app.core import _require_admin, get_db
-from app.schemas.auth_log import AuthLogResponse
+from app.core import _require_admin
+from app.repositories.auth_log_repository import AuthLogRepository
+from app.schemas.auth_log import AuthLogResponse, VerificationSummaryResponse
 from app.services.admin.admin_verification_service import AdminVerificationService
 
 router = APIRouter(
@@ -12,25 +14,39 @@ router = APIRouter(
 )
 
 
-# def get_admin_verification_service(
-#     session: Session = Depends(get_db()),
-#     auth_log_repo: AuthLogRepository = Depends(AuthLogRepository),
-# ):
-#     return AdminVerificationService(session, auth_log_repo)
+def get_admin_verification_service(
+    auth_log_repo: AuthLogRepository = Depends(AuthLogRepository),
+):
+    return AdminVerificationService(auth_log_repo)
 
 
-# @router.get("", response_model=list[AuthLogResponse], status_code=status.HTTP_200_OK)
-# async def get_all_verifications(
-#     service: AdminVerificationService = Depends(get_admin_verification_service),
-# ):
-#     return await service.get_all_verifications()
+@router.get("", response_model=Page[AuthLogResponse])
+async def get_all_verifications(
+    params: Params = Depends(),
+    service: AdminVerificationService = Depends(get_admin_verification_service),
+):
+    items = await service.get_all_verifications()
+    return paginate(items, params)
 
 
-# @router.get(
-#     "/{verification_id}", response_model=AuthLogResponse, status_code=status.HTTP_200_OK
-# )
-# async def get_verification_detail(
-#     verification_id: int,
-#     service: AdminVerificationService = Depends(get_admin_verification_service),
-# ):
-#     return await service.get_verification_detail(verification_id)
+@router.get(
+    "/summary",
+    response_model=VerificationSummaryResponse,
+    status_code=status.HTTP_200_OK,
+)
+async def get_verifications_summary(
+    service: AdminVerificationService = Depends(get_admin_verification_service),
+):
+    return await service.get_summary()
+
+
+@router.get(
+    "/{verification_id}",
+    response_model=AuthLogResponse,
+    status_code=status.HTTP_200_OK,
+)
+async def get_verification_detail(
+    verification_id: PydanticObjectId,
+    service: AdminVerificationService = Depends(get_admin_verification_service),
+):
+    return await service.get_verification_detail(verification_id)
