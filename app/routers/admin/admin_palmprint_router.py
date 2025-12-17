@@ -1,11 +1,15 @@
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.ext.asyncio import AsyncSession as Session
 
-from app.core.database import get_db
+from app.core import _require_admin, get_db
 from app.schemas.auth_log import AuthLogResponse
 from app.services.admin.admin_verification_service import AdminVerificationService
 
-router = APIRouter(prefix="/api/admin/verifications", tags=["Admin-Verifications"])
+router = APIRouter(
+    prefix="/api/admin/verifications",
+    tags=["Admin-Verifications"],
+    dependencies=[Depends(_require_admin)],
+)
 
 
 # def get_admin_verification_service(

@@ -3,12 +3,16 @@ from fastapi_pagination import Page, Params
 from fastapi_pagination.ext.sqlalchemy import paginate
 from sqlalchemy.ext.asyncio import AsyncSession as Session
 
-from app.core.database import get_db
+from app.core import _require_admin, get_db
 from app.repositories.report_repository import ReportRepository
 from app.schemas.report import ReportResponse
 from app.services.admin.admin_report_service import AdminReportService
 
-router = APIRouter(prefix="/api/admin/reports", tags=["Admin-Reports"])
+router = APIRouter(
+    prefix="/api/admin/reports",
+    tags=["Admin-Reports"],
+    dependencies=[Depends(_require_admin)],
+)
 
 
 def get_admin_report_service(

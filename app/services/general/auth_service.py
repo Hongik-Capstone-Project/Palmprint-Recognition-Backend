@@ -32,6 +32,8 @@ def build_user_claims(user: User) -> dict:
         )
 
     user_institution_roles = []
+    is_admin = False
+
     for uir in user.user_institution_roles or []:
         user_institution_roles.append(
             {
@@ -39,18 +41,23 @@ def build_user_claims(user: User) -> dict:
                 "institution_id": uir.institution_id,
             }
         )
+        if uir.role_id == 1 and uir.institution_id == 1:
+            is_admin = True
 
-    return {
+    result = {
         "user": {
             "id": str(user.id),
             "email": user.email,
             "name": user.name,
+            "role": "admin" if is_admin else "user",
             "phone_number": user.phone_number,
             "payment_methods": payment_methods,
             "user_institutions": user_institutions,
             "user_institution_roles": user_institution_roles,
         }
     }
+
+    return result
 
 
 class AuthService:

@@ -1,6 +1,12 @@
-from fastapi import APIRouter, status
+from fastapi import APIRouter, Depends, status
 
-router = APIRouter(prefix="/api/users/me/payment_methods", tags=["Payments"])
+from app.core import _get_current_payload
+
+router = APIRouter(
+    prefix="/api/users/me/payment_methods",
+    tags=["Payments"],
+    dependencies=[Depends(_get_current_payload)],
+)
 
 
 @router.get("", status_code=status.HTTP_200_OK)
