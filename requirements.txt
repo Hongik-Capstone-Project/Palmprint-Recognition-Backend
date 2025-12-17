@@ -16,6 +16,7 @@ python-dotenv==1.0.1
 
 # 비밀번호 해시 / JWT 인증
 passlib[bcrypt]==1.7.4
+bcrypt==3.2.2
 python-jose[cryptography]==3.3.0
 
 # 데이터 검증 / 직렬화
