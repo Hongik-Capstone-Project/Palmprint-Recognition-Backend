@@ -5,7 +5,12 @@ from sqlalchemy.ext.asyncio import AsyncSession as Session
 
 from app.core import _require_admin, get_db
 from app.repositories.device_repository import DeviceRepository
-from app.schemas.device import DeviceCreate, DeviceResponse, DeviceUpdate
+from app.schemas.device import (
+    DeviceCreate,
+    DeviceCreateResponse,
+    DeviceResponse,
+    DeviceUpdate,
+)
 from app.services.admin.admin_device_service import AdminDeviceService
 
 router = APIRouter(
@@ -40,7 +45,9 @@ async def get_device_detail(
     return await service.get_device_detail(device_id)
 
 
-@router.post("", response_model=DeviceResponse, status_code=status.HTTP_201_CREATED)
+@router.post(
+    "", response_model=DeviceCreateResponse, status_code=status.HTTP_201_CREATED
+)
 async def register_device(
     data: DeviceCreate, service: AdminDeviceService = Depends(get_admin_device_service)
 ):

@@ -1,6 +1,3 @@
-# app/schemas/role.py
-from typing import Optional
-
 from pydantic import BaseModel, Field
 
 from app.schemas.base import BaseSchema

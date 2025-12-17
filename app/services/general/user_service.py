@@ -5,7 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncSession as Session
 from app.core.security import hash_password
 from app.models.user import User
 from app.repositories.user_repository import UserRepository
-from app.schemas.user import UserCreate, UserCreateResponse
+from app.schemas.user import UserCreate
 
 
 class UserService:
@@ -13,7 +13,7 @@ class UserService:
         self.session = session
         self.user_repo = user_repo
 
-    async def create_user(self, data: UserCreate) -> UserCreateResponse:
+    async def create_user(self, data: UserCreate):
         query = self.user_repo.get_by_email_query(str(data.email))
         result = await self.session.execute(query)
         existing = result.scalar_one_or_none()

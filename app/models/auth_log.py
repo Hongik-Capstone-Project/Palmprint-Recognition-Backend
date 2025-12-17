@@ -7,9 +7,11 @@ from pydantic import Field
 
 class AuthLog(Document):
     id: ObjectId = Field(default_factory=ObjectId, alias="_id")
-    device_id: int = Field(...)
     user_id: int = Field(...)
+    institution_name: str = Field(...)
+    location: str = Field(...)
     is_success: bool = Field(...)
+    auth_type: str = Field(...)
     created_at: datetime = Field(default_factory=datetime.utcnow)
 
     class Settings:

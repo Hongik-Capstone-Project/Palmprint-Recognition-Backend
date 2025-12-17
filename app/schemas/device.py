@@ -1,11 +1,11 @@
-# app/schemas/device.py
 from __future__ import annotations
 
-from typing import List, Optional
+from typing import Optional
 
 from pydantic import BaseModel, Field
 
 from app.schemas.base import BaseSchema
+from app.schemas.institution import InstitutionResponse
 
 
 # -----------------
@@ -13,22 +13,22 @@ from app.schemas.base import BaseSchema
 # -----------------
 class DeviceCreate(BaseModel):
     institution_id: int = Field(..., description="기관 ID (FK)")
-    firmware_version: str = Field(..., max_length=100)
     location: Optional[str] = Field(None, max_length=255)
-    status: str = Field(..., max_length=50)
 
 
 class DeviceUpdate(BaseModel):
-    firmware_version: Optional[str] = Field(None, max_length=100)
+    institution_id: int = Field(..., description="기관 ID (FK)")
     location: Optional[str] = Field(None, max_length=255)
-    status: Optional[str] = Field(None, max_length=50)
 
 
 # -----------------
 # 응답 DTO (Response)
 # -----------------
-class DeviceResponse(BaseSchema):
+class DeviceCreateResponse(BaseSchema):
     institution_id: int
-    firmware_version: str
-    location: Optional[str]
-    status: str
+    location: str
+
+
+class DeviceResponse(BaseSchema):
+    institution: InstitutionResponse = Field(default_factory=list)
+    location: str

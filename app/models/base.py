@@ -1,5 +1,3 @@
-# app/models/base.py
-
 from datetime import datetime
 
 from sqlalchemy import BigInteger, DateTime, func

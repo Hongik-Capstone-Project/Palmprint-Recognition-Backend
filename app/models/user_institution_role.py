@@ -1,4 +1,3 @@
-# app/models/user_institution_role.py
 from sqlalchemy import ForeignKey, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 

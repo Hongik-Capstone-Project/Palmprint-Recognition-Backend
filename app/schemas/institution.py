@@ -1,5 +1,4 @@
-# app/schemas/institution.py
-from typing import List, Optional
+from typing import Optional
 
 from pydantic import BaseModel, Field
 
@@ -23,5 +22,3 @@ class InstitutionCreate(BaseModel):
 class InstitutionResponse(BaseSchema):
     name: str
     address: Optional[str]
-
-    # devices: List["DeviceResponse"] = [] # 나중에 추가

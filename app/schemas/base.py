@@ -1,6 +1,4 @@
-# app/schemas/base.py (수정)
-
-from datetime import datetime  # 💡 datetime 클래스 명시적으로 import
+from datetime import datetime
 from typing import Optional
 
 from pydantic import BaseModel, ConfigDict

@@ -1,4 +1,3 @@
-# app/models/device.py
 from typing import Optional
 
 from sqlalchemy import ForeignKey, String
@@ -15,10 +14,7 @@ class Device(Base):
         ForeignKey("institutions.id"), index=True
     )
 
-    firmware_version: Mapped[str] = mapped_column(String(100))
     location: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
-    status: Mapped[str] = mapped_column(String(50))
 
     # Relationships
     institution: Mapped["Institution"] = relationship(back_populates="devices")
-    # auth_logs: Mapped[list["AuthLog"]] = relationship(back_populates="device")

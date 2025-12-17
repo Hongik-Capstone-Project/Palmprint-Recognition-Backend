@@ -1,4 +1,3 @@
-# app/models/user_institution.py
 from sqlalchemy import ForeignKey, String, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -13,8 +12,7 @@ class UserInstitution(Base):
     institution_id: Mapped[int] = mapped_column(
         ForeignKey("institutions.id"), index=True
     )
-    local_id: Mapped[str] = mapped_column(String(100))
-    student_id: Mapped[str] = mapped_column(String(100))
+    institution_user_id: Mapped[str] = mapped_column(String(100))
 
     # Relationships
     user: Mapped["User"] = relationship(back_populates="user_institutions")
