@@ -12,11 +12,7 @@ from app.schemas.base import BaseSchema
 # 요청 DTO (Request)
 # -----------------
 class ReportCreate(BaseModel):
-    user_id: int = Field(..., description="사용자 ID (FK)")
-    # auth_log_id: int = Field(..., description="인증 로그 ID (FK)")
-    report_type: str = Field(..., max_length=100, description="신고 유형")
-    description: str = Field(..., description="신고 내용")  # Text 도메인
-    # status: str = Field(..., max_length=50) 생성시 default 값으로 'pending' 처리 예정
+    reason: str = Field(..., description="신고 사유")
 
 
 class ReportUpdate(BaseModel):
