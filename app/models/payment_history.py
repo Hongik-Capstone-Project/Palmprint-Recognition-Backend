@@ -1,12 +1,11 @@
 from datetime import datetime
 
-from beanie import Document
-from bson import ObjectId
+from beanie import Document, PydanticObjectId
 from pydantic import Field
 
 
 class PaymentHistory(Document):
-    id: ObjectId = Field(default_factory=ObjectId, alias="_id")
+    id: PydanticObjectId = Field(default_factory=PydanticObjectId)
     user_id: int = Field(...)
     payment_method_id: int = Field(...)
     amount: float = Field(...)

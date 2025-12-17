@@ -1,13 +1,13 @@
 from datetime import datetime
 
-from beanie import Document
-from bson import ObjectId
+from beanie import Document, PydanticObjectId
 from pydantic import Field
 
 
 class AuthLog(Document):
-    id: ObjectId = Field(default_factory=ObjectId, alias="_id")
+    id: PydanticObjectId = Field(default_factory=PydanticObjectId)
     user_id: int = Field(...)
+    institution_id: int = Field(...)
     institution_name: str = Field(...)
     location: str = Field(...)
     is_success: bool = Field(...)

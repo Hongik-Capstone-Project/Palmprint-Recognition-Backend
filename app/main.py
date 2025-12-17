@@ -47,7 +47,6 @@ app.include_router(general.verification_router.router)
 app.include_router(general.device_router.router)
 
 app.include_router(admin.admin_user_router.router)
-app.include_router(admin.admin_palmprint_router.router)
 app.include_router(admin.admin_device_router.router)
 app.include_router(admin.admin_report_router.router)
 app.include_router(admin.admin_verification_router.router)
