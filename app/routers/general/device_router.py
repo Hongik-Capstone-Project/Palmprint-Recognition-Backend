@@ -9,6 +9,6 @@ router = APIRouter(
 )
 
 
-@router.post("/verify", status_code=status.HTTP_200_OK)
-async def request_verification():
-    pass
+# @router.post("/verify", status_code=status.HTTP_200_OK)
+# async def request_verification():
+#     pass

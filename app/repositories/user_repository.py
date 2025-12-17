@@ -1,4 +1,4 @@
-from sqlalchemy import select
+from sqlalchemy import delete, select
 from sqlalchemy.orm import selectinload
 
 from app.models.user import User
@@ -35,3 +35,6 @@ class UserRepository(BaseRepository[User]):
 
     def search_by_phone_query(self, keyword: str):
         return self.search_query(User.phone_number, keyword)
+
+    def delete_by_id_query(self, id: int):
+        return delete(User).where(User.id == id)

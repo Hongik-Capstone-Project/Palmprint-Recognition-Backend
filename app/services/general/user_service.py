@@ -51,11 +51,32 @@ class UserService:
 
         return user
 
-    async def get_user(self, user_id: int):
-        pass
+    async def delete_me(self, payload):
+        user_block = payload.get("user") if payload else None
+        user_id = user_block.get("id") if user_block else None
 
-    async def get_me(self, user_id: int):
-        pass
+        if not user_id:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Invalid token payload",
+            )
 
-    async def delete_user(self, user_id: int):
-        pass
+        query = self.user_repo.get_by_id_query(user_id)
+        result = await self.session.execute(query)
+        user = result.scalar_one_or_none()
+
+        if user is None:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="User not found",
+            )
+
+        try:
+            await self.session.execute(self.user_repo.delete_by_id_query(user_id))
+            await self.session.commit()
+        except Exception:
+            await self.session.rollback()
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail="Server error occurred",
+            )
