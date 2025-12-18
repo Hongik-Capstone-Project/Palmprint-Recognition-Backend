@@ -10,7 +10,7 @@ from app.repositories.user_institution_role_repository import (
     UserInstitutionRoleRepository,
 )
 from app.repositories.user_repository import UserRepository
-from app.schemas.user import UserCreate, UserUpdate
+from app.schemas.user import UserAdminCreate, UserUpdate
 from app.schemas.user_institution_role import UserInstitutionRoleCreate
 
 
@@ -38,7 +38,7 @@ class AdminUserService:
             raise HTTPException(status_code=404, detail="User not found")
         return user
 
-    async def register_user(self, user_data: UserCreate):
+    async def register_user(self, user_data: UserAdminCreate):
         query = self.user_repo.get_by_email_query(str(user_data.email))
         result = await self.session.execute(query)
         if result.scalar_one_or_none():

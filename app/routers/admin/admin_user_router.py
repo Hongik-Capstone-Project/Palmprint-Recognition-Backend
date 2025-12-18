@@ -9,7 +9,12 @@ from app.repositories.user_institution_role_repository import (
     UserInstitutionRoleRepository,
 )
 from app.repositories.user_repository import UserRepository
-from app.schemas.user import UserCreate, UserCreateResponse, UserResponse, UserUpdate
+from app.schemas.user import (
+    UserAdminCreate,
+    UserCreateResponse,
+    UserResponse,
+    UserUpdate,
+)
 from app.schemas.user_institution_role import (
     UserInstitutionRoleCreate,
     UserInstitutionRoleResponse,
@@ -54,7 +59,7 @@ async def get_user_detail(
 
 @router.post("", response_model=UserCreateResponse, status_code=status.HTTP_201_CREATED)
 async def register_user(
-    data: UserCreate, service: AdminUserService = Depends(get_admin_user_service)
+    data: UserAdminCreate, service: AdminUserService = Depends(get_admin_user_service)
 ):
     return await service.register_user(data)
 
