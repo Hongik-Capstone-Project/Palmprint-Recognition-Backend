@@ -45,6 +45,7 @@ class UserResponse(BaseSchema):
     email: str
     name: str
     is_admin: bool = Field(False)
+    isPalmRegistered: bool = Field(False)
     payment_methods: list[PaymentMethodResponse] = Field(default_factory=list)
     reports: list[ReportResponse] = Field(default_factory=list)
     user_institutions: list[UserInstitutionResponse] = Field(default_factory=list)

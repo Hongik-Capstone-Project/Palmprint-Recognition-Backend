@@ -2,6 +2,8 @@ from sqlalchemy import delete, select
 from sqlalchemy.orm import selectinload
 
 from app.models.user import User
+from app.models.user_institution import UserInstitution
+from app.models.user_institution_role import UserInstitutionRole
 
 from .base import BaseRepository
 
@@ -14,8 +16,12 @@ class UserRepository(BaseRepository[User]):
         return stmt.options(
             selectinload(User.payment_methods),
             selectinload(User.reports),
-            selectinload(User.user_institutions),
-            selectinload(User.user_institution_roles),
+            selectinload(User.user_institutions).selectinload(
+                UserInstitution.institution
+            ),
+            selectinload(User.user_institution_roles).selectinload(
+                UserInstitutionRole.role
+            ),
         )
 
     def get_query(self):

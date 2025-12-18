@@ -1,6 +1,9 @@
+from typing import Optional
+
 from pydantic import BaseModel, Field
 
 from app.schemas.base import BaseSchema
+from app.schemas.institution import InstitutionResponse
 
 
 # -----------------
@@ -17,5 +20,5 @@ class UserInstitutionCreate(BaseModel):
 # -----------------
 class UserInstitutionResponse(BaseSchema):
     user_id: int
-    institution_id: int
+    institution: Optional[InstitutionResponse] = Field(default=None)
     institution_user_id: str
