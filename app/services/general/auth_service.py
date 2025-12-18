@@ -45,7 +45,7 @@ def build_user_claims(user: User) -> dict:
 
     result = {
         "user": {
-            "id": str(user.id),
+            "id": user.id,
             "email": user.email,
             "name": user.name,
             "role": "admin" if is_admin else "user",

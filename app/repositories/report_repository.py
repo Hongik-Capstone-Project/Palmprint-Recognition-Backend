@@ -10,7 +10,7 @@ class ReportRepository(BaseRepository[Report]):
     def get_by_user_query(self, user_id: int):
         return self.exact_query(Report.user_id, user_id)
 
-    def get_by_auth_log_query(self, auth_log_id: int):
+    def get_by_auth_log_query(self, auth_log_id: str):
         return self.exact_query(Report.auth_log_id, auth_log_id)
 
     def get_by_status_query(self, status: str):
