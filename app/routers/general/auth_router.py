@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.ext.asyncio import AsyncSession as Session
 
-from app.core import _get_current_payload, get_db
+from app.core import get_db
 from app.repositories.user_repository import UserRepository
 from app.schemas.auth import LoginRequest, RefreshRequest, TokenResponse
 from app.services.general.auth_service import AuthService

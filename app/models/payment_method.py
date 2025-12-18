@@ -1,5 +1,3 @@
-from typing import Optional
-
 from sqlalchemy import ForeignKey, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -16,5 +14,3 @@ class PaymentMethod(Base):
 
     # Relationships
     user: Mapped["User"] = relationship(back_populates="payment_methods")
-    # payment_histories: Mapped[List["PaymentHistory"]] = relationship(back_populates="payment_method")
-    # auth_logs: Mapped[List["AuthLog"]] = relationship(back_populates="payment_method")
