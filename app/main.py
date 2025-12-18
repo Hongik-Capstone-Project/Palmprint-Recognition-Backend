@@ -40,7 +40,7 @@ app = FastAPI(
 
 app.include_router(general.auth_router.router)
 app.include_router(general.user_router.router)
-app.include_router(general.institution_router.router)
+app.include_router(general.user_institution_router.router)
 app.include_router(general.payment_router.router)
 app.include_router(general.palmprint_router.router)
 app.include_router(general.verification_router.router)
