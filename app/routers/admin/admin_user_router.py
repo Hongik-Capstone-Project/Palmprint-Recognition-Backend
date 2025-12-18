@@ -4,6 +4,7 @@ from fastapi_pagination.ext.sqlalchemy import paginate
 from sqlalchemy.ext.asyncio import AsyncSession as Session
 
 from app.core import _require_admin, get_db
+from app.repositories.user_institution_repository import UserInstitutionRepository
 from app.repositories.user_institution_role_repository import (
     UserInstitutionRoleRepository,
 )
@@ -25,11 +26,14 @@ router = APIRouter(
 def get_admin_user_service(
     session: Session = Depends(get_db),
     user_repo: UserRepository = Depends(UserRepository),
+    user_institution_repo: UserInstitutionRepository = Depends(
+        UserInstitutionRepository
+    ),
     user_role_repo: UserInstitutionRoleRepository = Depends(
         UserInstitutionRoleRepository
     ),
 ):
-    return AdminUserService(session, user_repo, user_role_repo)
+    return AdminUserService(session, user_repo, user_institution_repo, user_role_repo)
 
 
 @router.get("", response_model=Page[UserResponse], status_code=status.HTTP_200_OK)

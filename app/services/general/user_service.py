@@ -24,10 +24,7 @@ class UserService:
             )
 
         user = User(
-            email=str(data.email),
-            password=hash_password(data.password),
-            name=data.name,
-            phone_number=data.phone_number,
+            email=str(data.email), password=hash_password(data.password), name=data.name
         )
         self.session.add(user)
 

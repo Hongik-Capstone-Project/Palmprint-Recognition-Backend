@@ -18,13 +18,13 @@ class UserCreate(BaseModel):
     email: EmailStr = Field(..., max_length=255)
     password: str = Field(..., min_length=8)
     name: str = Field(..., max_length=100)
-    phone_number: Optional[str] = Field(None, max_length=20)
+    is_admin: bool = Field(False)
 
 
 class UserUpdate(BaseModel):
     email: Optional[EmailStr] = Field(None, max_length=255)
     name: Optional[str] = Field(None, max_length=100)
-    phone_number: Optional[str] = Field(None, max_length=20)
+    is_admin: bool = Field(False)
 
 
 # -----------------
@@ -41,6 +41,7 @@ class UserCreateResponse(BaseSchema):
 class UserResponse(BaseSchema):
     email: str
     name: str
+    is_admin: bool = Field(False)
     payment_methods: list[PaymentMethodResponse] = Field(default_factory=list)
     reports: list[ReportResponse] = Field(default_factory=list)
     user_institutions: list[UserInstitutionResponse] = Field(default_factory=list)
