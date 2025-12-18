@@ -25,6 +25,10 @@ class AuthLogResponse(BaseSchema):
     }
 
 
+class VerificationReportCreate(BaseModel):
+    reason: str = Field(..., min_length=1, max_length=500)
+
+
 class VerificationSummaryResponse(BaseModel):
     total_users: int = Field(..., description="전체 유저 수")
     registered_palms: int = Field(..., description="등록된 손바닥 수")
