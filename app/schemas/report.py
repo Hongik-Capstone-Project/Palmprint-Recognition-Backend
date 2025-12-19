@@ -21,7 +21,7 @@ class ReportUpdate(BaseModel):
 # -----------------
 class ReportResponse(BaseSchema):
     user_id: int
-    auth_log_id: int
+    auth_log_id: str
     report_type: str
     description: str
     status: str
