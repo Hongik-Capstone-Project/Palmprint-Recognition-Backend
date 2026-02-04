@@ -1,5 +1,4 @@
 import math
-import os
 from typing import Optional
 
 import httpx
@@ -7,6 +6,7 @@ from fastapi import HTTPException, status
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession as Session
 
+from app.core.config import settings
 from app.models.user_palm import UserPalm
 from app.repositories.user_palm_repository import UserPalmRepository
 from app.schemas.user_palm import (
@@ -15,6 +15,7 @@ from app.schemas.user_palm import (
     PalmMatchResult,
     UserPalmRegister,
 )
+from app.utils.base64_image import extract_base64_image
 
 
 class UserPalmService:
@@ -23,15 +24,14 @@ class UserPalmService:
         self.session = session
         self.user_palm_repo = user_palm_repo
 
-        # 환경변수에서 설정 로드
-        self.embedding_service_url = os.getenv("EMBEDDING_SERVICE_URL")
-        self.similarity_threshold = float(
-            os.getenv("PALM_SIMILARITY_THRESHOLD", "0.85")
-        )
+        self.embedding_service_url = settings.EMBEDDING_SERVICE_URL
+        self.similarity_threshold = settings.PALM_SIMILARITY_THRESHOLD
 
     async def get_embedding_from_image(self, base64_image: str) -> list[float]:
         try:
-            request_data = EmbeddingServiceRequest(base64_image=base64_image)
+            request_data = EmbeddingServiceRequest(
+                base64_image=extract_base64_image(base64_image)
+            )
 
             async with httpx.AsyncClient(timeout=30.0) as client:
                 response = await client.post(
@@ -126,7 +126,9 @@ class UserPalmService:
 
     async def register_palm(self, user_id: int, data: UserPalmRegister) -> UserPalm:
         # 1. 임베딩 생성
-        embedding = await self.get_embedding_from_image(data.palmprint_data)
+        embedding = await self.get_embedding_from_image(
+            extract_base64_image(data.palmprint_data)
+        )
 
         # 2. DB에 저장
         user_palm = UserPalm(user_id=user_id, embedding=embedding)

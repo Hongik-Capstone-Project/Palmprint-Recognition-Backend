@@ -49,6 +49,9 @@ class Settings(BaseSettings):
             f"@{self.MONGO_HOST}:{self.MONGO_PORT}/{self.MONGO_DB_NAME}?authSource=admin"
         )
 
+    EMBEDDING_SERVICE_URL: str
+    PALM_SIMILARITY_THRESHOLD: float = 0.85
+
 
 # 설정 인스턴스 생성
 settings = Settings()

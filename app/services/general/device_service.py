@@ -9,6 +9,7 @@ from app.services.admin import AdminUserService
 from app.services.general.payment_service import PaymentService
 from app.services.general.user_institution_service import UserInstitutionService
 from app.services.general.user_palm_service import UserPalmService
+from app.utils.base64_image import extract_base64_image
 
 
 class DeviceService:
@@ -37,8 +38,9 @@ class DeviceService:
 
         # 2. 손바닥 임베딩 생성
         try:
+
             input_embedding = await self.user_palm_service.get_embedding_from_image(
-                data.palmprint_data
+                extract_base64_image(data.palmprint_data)
             )
         except HTTPException as e:
             # 임베딩 생성 실패 시 400 Bad Request
