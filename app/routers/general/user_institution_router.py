@@ -26,7 +26,7 @@ async def get_institutions(
     payload: dict = Depends(_get_current_payload),
     service: UserInstitutionService = Depends(get_user_institution_service),
 ):
-    return await service.get_institutions(payload)
+    return await service.get_institutions(payload["user"]["id"])
 
 
 @router.post(

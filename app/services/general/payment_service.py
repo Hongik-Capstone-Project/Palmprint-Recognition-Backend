@@ -11,9 +11,9 @@ class PaymentService:
         self.session = session
         self.payment_method_repo = payment_method_repo
 
-    async def get_payment_methods(self, payload: dict) -> list[PaymentMethod]:
+    async def get_payment_methods(self, user_id: int) -> list[PaymentMethod]:
         result = await self.session.execute(
-            self.payment_method_repo.get_by_user_query(payload["user"]["id"])
+            self.payment_method_repo.get_by_user_query(user_id)
         )
         return result.scalars().all()
 

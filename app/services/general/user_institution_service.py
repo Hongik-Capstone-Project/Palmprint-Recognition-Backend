@@ -13,11 +13,28 @@ class UserInstitutionService:
         self.session = session
         self.user_institution_repo = user_institution_repo
 
-    async def get_institutions(self, payload: dict):
+    async def get_institutions(self, user_id: int):
         result = await self.session.execute(
-            self.user_institution_repo.get_by_user_query(payload["user"]["id"])
+            self.user_institution_repo.get_by_user_query(user_id)
         )
         return result.scalars().all()
+
+    async def get_institution(
+        self,
+        user_id: int,
+        institution_id: int,
+    ):
+        result = await self.session.execute(
+            self.user_institution_repo.get_by_user_and_institution_query(
+                user_id, institution_id
+            )
+        )
+        user_institution = result.scalar_one_or_none()
+        if not user_institution:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail="Not found"
+            )
+        return user_institution
 
     async def add_institution(
         self, payload: dict, institution_data: UserInstitutionCreate
