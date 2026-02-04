@@ -26,7 +26,7 @@ async def get_payment_methods(
     payload: dict = Depends(_get_current_payload),
     service: PaymentService = Depends(get_payment_service),
 ):
-    return await service.get_payment_methods(payload)
+    return await service.get_payment_methods(payload["user"]["id"])
 
 
 @router.post(

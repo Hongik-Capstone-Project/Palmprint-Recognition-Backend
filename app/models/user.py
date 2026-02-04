@@ -39,5 +39,8 @@ class User(Base):
         back_populates="user"
     )
 
+    # User 클래스 내부에 추가
+    user_palms: Mapped[list["UserPalm"]] = relationship(back_populates="user")
+
     def __repr__(self) -> str:
         return f"User(id={self.id!r}, email={self.email!r})"
