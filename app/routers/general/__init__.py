@@ -1,5 +1,6 @@
 from . import (
     auth_router,
+    demo_router,
     device_router,
     payment_router,
     user_institution_router,
@@ -10,6 +11,7 @@ from . import (
 
 __all__ = [
     "auth_router",
+    "demo_router",
     "user_router",
     "user_institution_router",
     "payment_router",
