@@ -1,3 +1,5 @@
+from typing import Optional
+
 from pydantic import BaseModel, Field
 
 from app.schemas.base import BaseSchema
@@ -31,5 +33,5 @@ class DemoRegisterResponse(BaseSchema):
 
 class DemoVerifyResponse(BaseModel):
     matched: bool
-    name: str | None = Field(default=None, description="마스킹된 사용자 이름")
-    similarity_score: float | None = None
+    name: Optional[str] = Field(default=None, description="마스킹된 사용자 이름")
+    similarity_score: Optional[float] = None
